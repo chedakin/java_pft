@@ -1,4 +1,4 @@
-package sc.jfot;
+package sc.jfort.sandbox;
 
 public class Rectangle {
 
