@@ -9,7 +9,7 @@ import static org.testng.Assert.fail;
 
 public class TestBase {
 
-    protected final ApplicationManger app = new ApplicationManger(Browser.EDGE.browserName());
+    protected final ApplicationManger app = new ApplicationManger(Browser.CHROME.browserName());
 
     @BeforeClass(alwaysRun = true)
     public void setUp() throws Exception {
