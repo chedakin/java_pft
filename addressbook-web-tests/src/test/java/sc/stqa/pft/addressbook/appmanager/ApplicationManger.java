@@ -1,8 +1,14 @@
 package sc.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.Browser;
+import org.openqa.selenium.remote.BrowserType;
 
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import static org.testng.Assert.fail;
@@ -19,10 +25,24 @@ public class ApplicationManger {
     public String baseUrl;
 
     public StringBuffer verificationErrors = new StringBuffer();
+    private String browser;
+
+    public ApplicationManger(String browser) {
+        this.browser = browser;
+    }
 
     public void init() {
         System.setProperty("webdriver.gecko.driver","C:\\JavaTmp\\geckodriver.exe");
-        driver = new FirefoxDriver();
+        System.setProperty("webdriver.chrome.driver","C:\\JavaTmp\\chromedriver.exe");
+        System.setProperty("webdriver.edge.driver","C:\\JavaTmp\\msedgedriver.exe");
+        if (Objects.equals(browser, Browser.FIREFOX.browserName())) {
+            driver = new FirefoxDriver();
+        } else if (Objects.equals(browser, Browser.CHROME.browserName())) {
+            driver = new ChromeDriver();
+        } else if (Objects.equals(browser, Browser.EDGE.browserName())) {
+            driver = new EdgeDriver();
+        }
+
         baseUrl = "https://www.google.com/";
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get("http://localhost/addressbook/");
