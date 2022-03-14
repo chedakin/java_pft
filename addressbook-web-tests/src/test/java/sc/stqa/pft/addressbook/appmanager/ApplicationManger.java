@@ -11,7 +11,9 @@ public class ApplicationManger {
 
     private NavigationHelper navigationHelper;
     private GroupHelper groupHelper;
+    private ContactHelper contactHelper;
     private SessionHelper sessionHelper;
+
 
     public WebDriver driver;
     public String baseUrl;
@@ -27,6 +29,7 @@ public class ApplicationManger {
         groupHelper = new GroupHelper(driver);
         navigationHelper = new NavigationHelper(driver);
         sessionHelper = new SessionHelper(driver);
+        contactHelper = new ContactHelper(driver);
 
         sessionHelper.login("admin", "secret");
     }
@@ -41,16 +44,15 @@ public class ApplicationManger {
     }
 
 
-
-
-
-
-
     public GroupHelper getGroupHelper() {
         return groupHelper;
     }
 
     public NavigationHelper getNavigationHelper() {
         return navigationHelper;
+    }
+
+    public ContactHelper getContactHelper() {
+        return contactHelper;
     }
 }
