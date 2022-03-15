@@ -9,6 +9,13 @@ public class ContactModificationTest extends TestBase {
     public void testContactModification() throws Exception {
 
         app.getNavigationHelper().gotoHomePage();
+
+        if (! app.getContactHelper().isThereAContact()){
+            app.getNavigationHelper().gotoAddNew();
+            app.getContactHelper().createContact(new ContactData("Serg", "Ched", "Mr", "L.Chaikinoi", "+79067762568", "test2"), true);
+            app.getNavigationHelper().gotoHomePage();
+        }
+
         app.getContactHelper().selectContact();
         app.getContactHelper().initContactModification();
         app.getContactHelper().fillContactForm(new ContactData("Serg", "Ched", "Mr", "L.Chaikinoi", "+79067762568", null), false);

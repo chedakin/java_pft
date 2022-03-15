@@ -50,10 +50,21 @@ public class ContactHelper extends HelperBase {
     }
 
     public void initContactModification() {
-        driver.findElement(By.xpath("//table[@id='maintable']/tbody/tr[3]/td[8]/a/img")).click();
+       // driver.findElement(By.xpath("//table[@id='maintable']/tbody/tr[3]/td[8]/a/img")).click();
+        driver.findElement(By.xpath("//img[@alt='Edit']")).click();
     }
 
     public void submitContactModification() {
         driver.findElement(By.xpath("//div[@id='content']/form/input[22]")).click();
+    }
+
+    public void createContact(ContactData contact, boolean creation) {
+        fillContactForm(contact, creation);
+        submitContactCreation();
+        returnToContactPage();
+    }
+
+    public boolean isThereAContact() {
+        return isElementPresent(By.name("selected[]"));
     }
 }
