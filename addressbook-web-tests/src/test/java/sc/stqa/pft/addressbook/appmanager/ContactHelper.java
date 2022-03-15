@@ -2,6 +2,8 @@ package sc.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import sc.stqa.pft.addressbook.models.ContactData;
 
 import static org.testng.Assert.assertTrue;
@@ -11,12 +13,18 @@ public class ContactHelper extends HelperBase {
     public ContactHelper(WebDriver driver) {
         super(driver);
     }
-    public void fillContactForm(ContactData contactData) {
+    public void fillContactForm(ContactData contactData, boolean creation) {
         type(By.name("firstname"), contactData.getFirstname());
         type(By.name("lastname"), contactData.getLastname());
         type(By.name("title"), contactData.getTitle());
         type(By.name("address"), contactData.getAddress());
         type(By.name("mobile"), contactData.getMobile());
+
+        if (creation){
+            new Select(driver.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+        } else {
+            Assert.assertFalse(isElementPresent(By.name("new_group")));
+        }
     }
 
     public void returnToContactPage() {
@@ -32,9 +40,13 @@ public class ContactHelper extends HelperBase {
     }
 
     public void deleteContact() {
-        acceptNextAlert = true;
-        driver.findElement(By.xpath("//input[@value='Delete']")).click();
-        assertTrue(closeAlertAndGetItsText().matches("^Delete 1 addresses[\\s\\S]$"));
+        if (isAlertPresent()) {
+            acceptNextAlert = true;
+            driver.findElement(By.xpath("//input[@value='Delete']")).click();
+            assertTrue(closeAlertAndGetItsText().matches("^Delete 1 addresses[\\s\\S]$"));
+        } else {
+            return;
+        }
     }
 
     public void initContactModification() {
