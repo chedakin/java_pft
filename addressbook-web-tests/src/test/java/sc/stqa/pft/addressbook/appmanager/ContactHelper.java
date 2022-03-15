@@ -40,13 +40,9 @@ public class ContactHelper extends HelperBase {
     }
 
     public void deleteContact() {
-        if (isAlertPresent()) {
             acceptNextAlert = true;
             driver.findElement(By.xpath("//input[@value='Delete']")).click();
             assertTrue(closeAlertAndGetItsText().matches("^Delete 1 addresses[\\s\\S]$"));
-        } else {
-            return;
-        }
     }
 
     public void initContactModification() {
@@ -66,5 +62,9 @@ public class ContactHelper extends HelperBase {
 
     public boolean isThereAContact() {
         return isElementPresent(By.name("selected[]"));
+    }
+
+    public int getContactCount() {
+        return driver.findElements(By.name("selected[]")).size();
     }
 }
