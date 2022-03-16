@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import sc.stqa.pft.addressbook.models.ContactData;
-import sc.stqa.pft.addressbook.models.GroupData;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ public class ContactHelper extends HelperBase {
     public void fillContactForm(ContactData contactData, boolean creation) {
         type(By.name("firstname"), contactData.getFirstname());
         type(By.name("lastname"), contactData.getLastname());
-        type(By.name("title"), contactData.getTitle());
+        type(By.name("email"), contactData.getEmail());
         type(By.name("address"), contactData.getAddress());
         type(By.name("mobile"), contactData.getMobile());
 
@@ -50,9 +50,9 @@ public class ContactHelper extends HelperBase {
             assertTrue(closeAlertAndGetItsText().matches("^Delete 1 addresses[\\s\\S]$"));
     }
 
-    public void initContactModification() {
+    public void initContactModification(int index) {
        // driver.findElement(By.xpath("//table[@id='maintable']/tbody/tr[3]/td[8]/a/img")).click();
-        driver.findElement(By.xpath("//img[@alt='Edit']")).click();
+        driver.findElements(By.xpath("//img[@alt='Edit']")).get(index).click();
     }
 
     public void submitContactModification() {
@@ -78,10 +78,12 @@ public class ContactHelper extends HelperBase {
         List<WebElement> elements = driver.findElements(By.name("entry"));
         for(WebElement element : elements) {
             String name = element.getText();
-            ContactData contact = new ContactData(name, null, null, null, null, null );
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+            ContactData contact = new ContactData(id, name, null, null, null, null, null );
             contacts.add(contact);
         }
 
         return contacts;
     }
+
 }
