@@ -8,8 +8,9 @@ import org.testng.Assert;
 import sc.stqa.pft.addressbook.models.ContactData;
 
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.testng.Assert.assertTrue;
 
@@ -40,8 +41,8 @@ public class ContactHelper extends HelperBase {
         click(By.xpath("//div[@id='content']/form/input[21]"));
     }
 
-    public void selectContact(int index) {
-        driver.findElements(By.name("selected[]")).get(index).click();
+    public void selectContactById(int id) {
+        driver.findElement(By.cssSelector("input[value='" + id +"']")).click();
     }
 
     public void deleteContact() {
@@ -50,9 +51,8 @@ public class ContactHelper extends HelperBase {
             assertTrue(closeAlertAndGetItsText().matches("^Delete 1 addresses[\\s\\S]$"));
     }
 
-    public void initContactModification(int index) {
-       // driver.findElement(By.xpath("//table[@id='maintable']/tbody/tr[3]/td[8]/a/img")).click();
-        driver.findElements(By.xpath("//img[@alt='Edit']")).get(index).click();
+    public void initContactModificationById(int id) {
+        driver.findElement(By.xpath("//a[@href='edit.php?id=" + id + "']")).click();
     }
 
     public void submitContactModification() {
@@ -65,17 +65,18 @@ public class ContactHelper extends HelperBase {
         returnToContactPage();
     }
 
-    public void modify(int index, ContactData contact) {
-        initContactModification(index);
+    public void modify(ContactData contact) {
+        initContactModificationById(contact.getId());
         fillContactForm(contact, false);
         submitContactModification();
         returnToContactPage();
     }
 
-    public void delete(int index) {
-        selectContact(index);
+
+    public void delete(ContactData contact) {
+        selectContactById(contact.getId());
         deleteContact();
-     }
+    }
 
     public boolean isThereAContact() {
         return isElementPresent(By.name("selected[]"));
@@ -85,8 +86,8 @@ public class ContactHelper extends HelperBase {
         return driver.findElements(By.name("selected[]")).size();
     }
 
-    public List<ContactData> list() {
-        List<ContactData> contacts = new ArrayList<ContactData>();
+    public Set<ContactData> all() {
+        Set<ContactData> contacts = new HashSet<>();
         List<WebElement> elements = driver.findElements(By.name("entry"));
         for(WebElement element : elements) {
             String name = element.getText();
@@ -97,5 +98,4 @@ public class ContactHelper extends HelperBase {
 
         return contacts;
     }
-
 }
