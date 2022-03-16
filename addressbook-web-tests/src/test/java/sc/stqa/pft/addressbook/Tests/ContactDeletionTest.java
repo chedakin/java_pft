@@ -15,7 +15,8 @@ public class ContactDeletionTest extends TestBase {
 
         if (app.contact().list().size() == 0){
             app.goTo().addNew();
-            app.contact().create(new ContactData("Serg", "Ched", "a@sct.ru", "L.Chaikinoi", "+79067762568", "test2"), true);
+            app.contact().create(new ContactData().withFirstname("Serg").withLastname("Ched").withEmail("a@sct.ru").
+                    withAddress("L.Chaikinoi").withMobile("+79067762568").withGroup("test2"), true);
             app.goTo().homePage();
         }
     }

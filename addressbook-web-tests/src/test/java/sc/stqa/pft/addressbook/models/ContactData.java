@@ -3,32 +3,13 @@ package sc.stqa.pft.addressbook.models;
 import java.util.Objects;
 
 public class ContactData {
-    private int id;
+    private int id = Integer.MAX_VALUE;
     private String firstname;
-    private final String lastname;
-    private final String email;
-    private final String address;
-    private final String mobile;
+    private String lastname;
+    private String email;
+    private String address;
+    private String mobile;
     private String group;
-
-    public ContactData(String firstname, String lastname, String email, String address, String mobile, String group){
-        this.id = Integer.MAX_VALUE;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.email = email;
-        this.address = address;
-        this.mobile = mobile;
-        this.group = group;
-    }
-    public ContactData(int id, String firstname, String lastname, String email, String address, String mobile, String group){
-        this.id = id;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.email = email;
-        this.address = address;
-        this.mobile = mobile;
-        this.group = group;
-    }
 
     public String getFirstname() { return firstname; }
 
@@ -44,13 +25,41 @@ public class ContactData {
 
     public int getId() { return id; }
 
-    public void setFirstname(String firstname) {
+    public ContactData withFirstname(String firstname) {
         this.firstname = firstname;
+        return this;
     }
 
-    public void setId(int id) {
+    public ContactData withId(int id) {
         this.id = id;
+        return this;
     }
+
+    public ContactData withLastname(String lastname) {
+        this.lastname = lastname;
+        return this;
+    }
+
+    public ContactData withEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public ContactData withAddress(String address) {
+        this.address = address;
+        return this;
+    }
+
+    public ContactData withMobile(String mobile) {
+        this.mobile = mobile;
+        return this;
+    }
+
+    public ContactData withGroup(String group) {
+        this.group = group;
+        return this;
+    }
+
 
     @Override
     public boolean equals(Object o) {

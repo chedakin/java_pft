@@ -15,13 +15,12 @@ public class ContactCreationTest extends TestBase {
         app.goTo().homePage();
         List<ContactData> before = app.contact().list();
         app.goTo().addNew();
-        ContactData contact = new ContactData("Serg", "Ched", "a@sct.ru", "L.Chaikinoi", "+79067762568", "test2");
+        ContactData contact = new ContactData().withFirstname("Serg").withLastname("Ched").withEmail("a@sct.ru").withAddress("L.Chaikinoi").withMobile("+79067762568").withGroup("test2");
         app.contact().create(contact, true);
         List<ContactData> after = app.contact().list();
 
         Assert.assertEquals(before.size(), after.size() - 1);
-        ContactData contactToBefore = new ContactData(null, null, null, null, null, null);
-        contactToBefore.setFirstname(contact.getLastname() + " " + contact.getFirstname() + " " + contact.getAddress() + " " + contact.getEmail() + " " + contact.getMobile());
+        ContactData contactToBefore = new ContactData().withFirstname(contact.getLastname() + " " + contact.getFirstname() + " " + contact.getAddress() + " " + contact.getEmail() + " " + contact.getMobile());
 
         before.add(contactToBefore);
 

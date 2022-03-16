@@ -16,7 +16,8 @@ public class ContactModificationTest extends TestBase {
 
         if (app.contact().list().size() == 0){
             app.goTo().addNew();
-            app.contact().create(new ContactData("Serg", "Ched", "a@sct.ru", "L.Chaikinoi", "+79067762568", "test2"), true);
+            app.contact().create(new ContactData().withFirstname("Serg").withLastname("Ched").withEmail("a@sct.ru").
+                    withAddress("L.Chaikinoi").withMobile("+79067762568").withGroup("test2"), true);
             app.goTo().homePage();
         }
     }
@@ -27,14 +28,14 @@ public class ContactModificationTest extends TestBase {
 
         List<ContactData> before = app.contact().list();
         int index = before.size()-1;
-        ContactData contact = new ContactData(before.get(index).getId(), "Serg", "Ched", "a2@sct.ru", "L.Chaikinoi", "+79067762568", null);
+        ContactData contact = new ContactData().withId(before.get(index).getId()).withFirstname("Serg").withLastname("Ched").
+                withEmail("a2@sct.ru").withAddress("L.Chaikinoi").withMobile("+79067762568");
 
         app.contact().modify(index, contact);
         List<ContactData> after = app.contact().list();
 
-        ContactData contactBefore = new ContactData(null, null, null, null, null, null);
-        contactBefore.setFirstname(contact.getLastname() + " " + contact.getFirstname() + " " + contact.getAddress() + " " + contact.getEmail() + " " + contact.getMobile());
-        contactBefore.setId(contact.getId());
+        ContactData contactBefore = new ContactData().withFirstname(contact.getLastname() + " " + contact.getFirstname() + " " + contact.getAddress() + " " + contact.getEmail() + " " + contact.getMobile()).
+                withId(contact.getId());
 
         Assert.assertEquals(before.size(), after.size());
         before.remove(index);
