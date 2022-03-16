@@ -59,11 +59,23 @@ public class ContactHelper extends HelperBase {
         driver.findElement(By.xpath("//div[@id='content']/form/input[22]")).click();
     }
 
-    public void createContact(ContactData contact, boolean creation) {
+    public void create(ContactData contact, boolean creation) {
         fillContactForm(contact, creation);
         submitContactCreation();
         returnToContactPage();
     }
+
+    public void modify(int index, ContactData contact) {
+        initContactModification(index);
+        fillContactForm(contact, false);
+        submitContactModification();
+        returnToContactPage();
+    }
+
+    public void delete(int index) {
+        selectContact(index);
+        deleteContact();
+     }
 
     public boolean isThereAContact() {
         return isElementPresent(By.name("selected[]"));
@@ -73,7 +85,7 @@ public class ContactHelper extends HelperBase {
         return driver.findElements(By.name("selected[]")).size();
     }
 
-    public List<ContactData> getContactList() {
+    public List<ContactData> list() {
         List<ContactData> contacts = new ArrayList<ContactData>();
         List<WebElement> elements = driver.findElements(By.name("entry"));
         for(WebElement element : elements) {
