@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import sc.stqa.pft.addressbook.models.ContactData;
+import sc.stqa.pft.addressbook.models.Contacts;
 
 
 import java.util.HashSet;
@@ -86,8 +87,8 @@ public class ContactHelper extends HelperBase {
         return driver.findElements(By.name("selected[]")).size();
     }
 
-    public Set<ContactData> all() {
-        Set<ContactData> contacts = new HashSet<>();
+    public Contacts all() {
+        Contacts contacts = new Contacts();
         List<WebElement> elements = driver.findElements(By.name("entry"));
         for(WebElement element : elements) {
             String name = element.getText();

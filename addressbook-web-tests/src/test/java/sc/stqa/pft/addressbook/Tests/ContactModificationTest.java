@@ -4,7 +4,12 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import sc.stqa.pft.addressbook.models.ContactData;
+import sc.stqa.pft.addressbook.models.Contacts;
+
 import java.util.Set;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactModificationTest extends TestBase {
 
@@ -24,22 +29,21 @@ public class ContactModificationTest extends TestBase {
     @Test
     public void testContactModification() throws Exception {
 
-        Set<ContactData> before = app.contact().all();
+        Contacts before = app.contact().all();
         ContactData modifiedContact = before.iterator().next();
         ContactData contact = new ContactData().withId(modifiedContact.getId()).withFirstname("Serg").withLastname("Ched").
                 withEmail("a2@sct.ru").withAddress("L.Chaikinoi").withMobile("+79067762568");
 
         app.contact().modify(contact);
-        Set<ContactData> after = app.contact().all();
+        Contacts after = app.contact().all();
 
-        ContactData contactBefore = new ContactData().withFirstname(contact.getLastname() + " " + contact.getFirstname() + " " + contact.getAddress() + " " + contact.getEmail() + " " + contact.getMobile()).
+        ContactData contactBefore = new ContactData().withFirstname
+                        (contact.getLastname() + " " + contact.getFirstname() + " " + contact.getAddress() + " " + contact.getEmail() + " " + contact.getMobile()).
                 withId(contact.getId());
 
-        Assert.assertEquals(before.size(), after.size());
-        before.remove(modifiedContact);
-        before.add(contactBefore);
+        assertThat(after.size(), equalTo(before.size()));
+        assertThat(after, equalTo(before.without(modifiedContact).withAdded(contactBefore)));
 
-        Assert.assertEquals(after, before);
     }
 
 
