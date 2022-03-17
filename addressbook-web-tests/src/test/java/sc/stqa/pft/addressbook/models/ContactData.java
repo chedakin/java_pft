@@ -1,6 +1,10 @@
 package sc.stqa.pft.addressbook.models;
 
+import sc.stqa.pft.addressbook.Tests.ContactPhoneTest;
+
+import java.util.Arrays;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class ContactData {
     private int id = Integer.MAX_VALUE;
@@ -10,7 +14,13 @@ public class ContactData {
     private String address;
     private String mobile;
     private String group;
+    private String homePhone;
+    private String workPhone;
+    private String allPhones;
 
+    public String getAllPhones() {
+        return allPhones;
+    }
     public String getFirstname() { return firstname; }
 
     public String getLastname() { return lastname; }
@@ -20,6 +30,10 @@ public class ContactData {
     public String getAddress() { return address; }
 
     public String getMobile() { return mobile; }
+
+    public String getHomePhone() { return homePhone; }
+
+    public String getWorkPhone() { return workPhone; }
 
     public String getGroup() { return group; }
 
@@ -55,8 +69,23 @@ public class ContactData {
         return this;
     }
 
+    public ContactData withHomePhone(String homePhone) {
+        this.homePhone = homePhone;
+        return this;
+    }
+
+    public ContactData withWorkPhone(String workPhone) {
+        this.workPhone = workPhone;
+        return this;
+    }
+
     public ContactData withGroup(String group) {
         this.group = group;
+        return this;
+    }
+
+    public ContactData withAllPhones(String allPhones) {
+        this.allPhones = allPhones;
         return this;
     }
 
@@ -66,12 +95,12 @@ public class ContactData {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ContactData that = (ContactData) o;
-        return id == that.id && Objects.equals(firstname, that.firstname) && Objects.equals(lastname, that.lastname) && Objects.equals(email, that.email) && Objects.equals(address, that.address) && Objects.equals(mobile, that.mobile);
+        return id == that.id && Objects.equals(firstname, that.firstname) && Objects.equals(lastname, that.lastname) && Objects.equals(email, that.email) && Objects.equals(address, that.address) && Objects.equals(allPhones, that.allPhones);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstname, lastname, email, address, mobile);
+        return Objects.hash(id, firstname, lastname, email, address, allPhones);
     }
 
     @Override
@@ -83,8 +112,10 @@ public class ContactData {
                 ", email='" + email + '\'' +
                 ", address='" + address + '\'' +
                 ", mobile='" + mobile + '\'' +
+                ", group='" + group + '\'' +
+                ", homePhone='" + homePhone + '\'' +
+                ", workPhone='" + workPhone + '\'' +
+                ", allPhones='" + allPhones + '\'' +
                 '}';
     }
-
-
 }
