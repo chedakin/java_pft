@@ -2,6 +2,8 @@ package sc.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.*;
 
+import java.io.File;
+
 public class HelperBase {
     public boolean acceptNextAlert = true;
     protected WebDriver driver;
@@ -21,6 +23,11 @@ public class HelperBase {
         }
     }
 
+    protected void attach(By locator, File file) {
+        if (file != null){
+            driver.findElement(locator).sendKeys(file.getAbsolutePath());
+        }
+    }
 
 /*
 protected void type(By locator, String text) {

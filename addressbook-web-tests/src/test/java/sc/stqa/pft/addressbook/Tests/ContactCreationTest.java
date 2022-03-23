@@ -4,6 +4,7 @@ import org.testng.annotations.*;
 import sc.stqa.pft.addressbook.models.ContactData;
 import sc.stqa.pft.addressbook.models.Contacts;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -19,8 +20,9 @@ public class ContactCreationTest extends TestBase {
         app.goTo().homePage();
         Contacts before = app.contact().all();
         app.goTo().addNew();
+        File photo = new File("src/test/resources/123.png");
         ContactData contact = new ContactData().withFirstname("Serg").withLastname("Ched").withEmail("a@sct.ru")
-                .withAddress("L.Chaikinoi").withMobile("+79067762568").withGroup("test2");
+                .withAddress("L.Chaikinoi").withMobile("+79067762568").withGroup("test2").withPhoto(photo);
         app.contact().create(contact, true);
 
         assertThat(app.contact().count()-1, equalTo(before.size()));
@@ -41,8 +43,13 @@ public class ContactCreationTest extends TestBase {
         return phone.replaceAll("\\s", "").replaceAll("[-()]", "");
     }
 
-
-
-
+    @Test(enabled = false)
+    public void testCurrentDir() {
+        File currentDir = new File(".");
+        System.out.println(currentDir.getAbsolutePath());
+        File photo = new File("src/test/resources/123.png");
+        System.out.println(photo.getAbsolutePath());
+        System.out.println(photo.exists());
+    }
 
 }

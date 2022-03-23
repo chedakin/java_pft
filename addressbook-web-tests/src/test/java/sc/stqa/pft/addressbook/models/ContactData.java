@@ -2,6 +2,7 @@ package sc.stqa.pft.addressbook.models;
 
 import sc.stqa.pft.addressbook.Tests.ContactPhoneTest;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -17,10 +18,15 @@ public class ContactData {
     private String homePhone;
     private String workPhone;
     private String allPhones;
+    private File photo;
 
+    public File getPhoto() {
+        return photo;
+    }
     public String getAllPhones() {
         return allPhones;
     }
+
     public String getFirstname() { return firstname; }
 
     public String getLastname() { return lastname; }
@@ -89,6 +95,10 @@ public class ContactData {
         return this;
     }
 
+    public ContactData withPhoto(File photo) {
+        this.photo = photo;
+        return this;
+    }
 
     @Override
     public boolean equals(Object o) {
