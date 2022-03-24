@@ -19,7 +19,7 @@ public class GroupCreationTest extends TestBase{
   @DataProvider
   public Iterator<Object[]> validGroupsFromCSV() throws IOException {
     List<Object[]> list = new ArrayList<Object[]>();
-    BufferedReader reader = new BufferedReader(new FileReader(new File("src\\test\\resources\\groups.csv")));
+    BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/groups.csv")));
     String line = reader.readLine();
     while (line != null) {
       String[] split = line.split(";");
@@ -32,21 +32,22 @@ public class GroupCreationTest extends TestBase{
 // НЕ РАБОТАЕТ!!!!
   @DataProvider
   public Iterator<Object[]> validGroupsFromXML() throws IOException {
-    BufferedReader reader = new BufferedReader(new FileReader(new File("src\\test\\resources\\groups.xml")));
-
-    StringBuilder xmlBuilder = new StringBuilder();
+    BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/groups.xml")));
+    String xml = "";
     String line = reader.readLine();
     while (line != null) {
-      xmlBuilder.append(line);
+      xml += line;
       line = reader.readLine();
     }
     XStream xstream = new XStream();
     xstream.processAnnotations(GroupData.class);
-    List<GroupData[]> groups = (List<GroupData[]>) xstream.fromXML(xmlBuilder.toString());
-    return groups.stream().map((g) -> new Object[]{g}).collect(Collectors.toList()).iterator();
+    //В следующей строке вылетает без ошибок просто skip
+    List<GroupData> groups = (List<GroupData>) xstream.fromXML(xml);
+    return groups.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
+
   }
 
-  @Test(dataProvider = "validGroupsFromCSV")
+  @Test(dataProvider = "validGroupsFromXML")
   public void testGroupCreation(GroupData group) {
     app.goTo().groupPage();
 
