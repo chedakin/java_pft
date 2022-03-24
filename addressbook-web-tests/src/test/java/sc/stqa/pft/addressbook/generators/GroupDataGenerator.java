@@ -3,6 +3,8 @@ package sc.stqa.pft.addressbook.generators;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.thoughtworks.xstream.XStream;
 import sc.stqa.pft.addressbook.models.GroupData;
 
@@ -42,10 +44,20 @@ public class GroupDataGenerator {
             saveAsCsv(groups, new File(file));
         } else if (format.equals("xml")){
             saveAsXml(groups, new File(file));
+        } else if (format.equals("json")){
+            saveAsJson(groups, new File(file));
         } else {
             System.out.println("unrecognized format " + format);
         }
 
+    }
+
+    private void saveAsJson(List<GroupData> groups, File file) throws IOException {
+        Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
+        String json = gson.toJson(groups);
+        try (Writer writer = new FileWriter(file)) {
+            writer.write(json);
+        }
     }
 
     private void saveAsXml(List<GroupData> groups, File file) throws IOException {
@@ -53,17 +65,17 @@ public class GroupDataGenerator {
         //xStream.alias("group", GroupData.class);
         xStream.processAnnotations(GroupData.class);
         String xml = xStream.toXML(groups);
-        Writer writer = new FileWriter(file);
-        writer.write(xml);
-        writer.close();
+        try (Writer writer = new FileWriter(file)) {
+            writer.write(xml);
+        }
     }
 
     private void saveAsCsv(List<GroupData> groups, File file) throws IOException {
-        Writer writer = new FileWriter(file);
-        for (GroupData group : groups){
-            writer.write(String.format("%s;%s;%s\n", group.getName(), group.getHeader(),group.getFooter()));
+        try (Writer writer = new FileWriter(file)) {
+            for (GroupData group : groups) {
+                writer.write(String.format("%s;%s;%s\n", group.getName(), group.getHeader(), group.getFooter()));
+            }
         }
-        writer.close();
     }
 
     private List<GroupData> generateGroups(int count) {
