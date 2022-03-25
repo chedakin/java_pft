@@ -8,6 +8,7 @@ import sc.stqa.pft.addressbook.models.ContactData;
 import sc.stqa.pft.addressbook.models.Contacts;
 import sc.stqa.pft.addressbook.models.GroupData;
 
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,12 +51,12 @@ public class ContactCreationTest extends TestBase {
             xstream.processAnnotations(ContactData.class);
             //В следующей строке вылетает без ошибок просто skip
             List<ContactData> contacts = (List<ContactData>) xstream.fromXML(xml);
-            return contacts.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
+            return contacts.stream().map((c) -> new Object[] {c}).collect(Collectors.toList()).iterator();
         }
     }
 
     @DataProvider
-     public Iterator<Object[]> validContactsFromJSON() throws IOException {
+    public Iterator<Object[]> validContactsFromJSON() throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.json")))) {
             String json = "";
             String line = reader.readLine();
@@ -63,9 +64,10 @@ public class ContactCreationTest extends TestBase {
                 json += line;
                 line = reader.readLine();
             }
+            System.out.println(json);
             Gson gson = new Gson();
             List<ContactData> contacts = gson.fromJson(json, new TypeToken<List<ContactData>>(){}.getType());
-            return contacts.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
+            return contacts.stream().map((c) -> new Object[] {c}).collect(Collectors.toList()).iterator();
         }
     }
 

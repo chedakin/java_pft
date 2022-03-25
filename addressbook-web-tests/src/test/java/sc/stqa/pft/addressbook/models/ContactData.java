@@ -20,7 +20,7 @@ public class ContactData {
     private String address;
     @Expose
     private String mobile;
-    @Expose
+    @XStreamOmitField
     private String group;
     @Expose
     private String homePhone;
