@@ -1,21 +1,20 @@
 package sc.stqa.pft.addressbook.Tests;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.thoughtworks.xstream.XStream;
 import org.testng.annotations.*;
 import sc.stqa.pft.addressbook.models.ContactData;
 import sc.stqa.pft.addressbook.models.Contacts;
-import sc.stqa.pft.addressbook.models.GroupData;
-
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -56,7 +55,7 @@ public class ContactCreationTest extends TestBase {
     }
 
     @DataProvider
-    public Iterator<Object[]> validContactsFromJSON() throws IOException {
+    public Iterator<Object[]> validContactsFromGSON() throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.json")))) {
             String json = "";
             String line = reader.readLine();
@@ -71,7 +70,24 @@ public class ContactCreationTest extends TestBase {
         }
     }
 
-    @Test(dataProvider = "validContactsFromJSON")
+    @DataProvider
+    public Iterator<Object[]> validContactsFromJackson() throws IOException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contacts.json")))) {
+            String json = "";
+            String line = reader.readLine();
+            while (line != null) {
+                json += line;
+                line = reader.readLine();
+            }
+            System.out.println(json);
+            ObjectMapper mapper = new ObjectMapper ();
+            List<ContactData> contacts = mapper.readValue(json, new TypeReference<List<ContactData>>(){});
+            return contacts.stream().map((c) -> new Object[] {c}).collect(Collectors.toList()).iterator();
+        }
+    }
+
+
+    @Test(dataProvider = "validContactsFromJackson")
     public void testContactCreation(ContactData contact) throws Exception {
         app.goTo().homePage();
 

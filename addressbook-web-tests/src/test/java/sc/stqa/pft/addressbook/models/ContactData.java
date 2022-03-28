@@ -1,4 +1,6 @@
 package sc.stqa.pft.addressbook.models;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
@@ -9,6 +11,7 @@ import java.util.Objects;
 @XStreamAlias("contact")
 public class ContactData {
     @XStreamOmitField
+    @JsonIgnore
     private int id = Integer.MAX_VALUE;
     @Expose
     private String firstname;
@@ -21,14 +24,17 @@ public class ContactData {
     @Expose
     private String mobile;
     @XStreamOmitField
+    @JsonIgnore
     private String group;
     @Expose
     private String homePhone;
     @Expose
     private String workPhone;
     @XStreamOmitField
+    @JsonIgnore
     private String allPhones;
     @XStreamOmitField
+    @JsonIgnore
     private File photo;
 
     public File getPhoto() {
