@@ -6,8 +6,13 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.Browser;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.Duration;
 import java.util.Objects;
+import java.util.Properties;
 
 import static org.testng.Assert.fail;
 
@@ -18,7 +23,7 @@ public class ApplicationManger {
     private ContactHelper contactHelper;
     private SessionHelper sessionHelper;
 
-
+    private final Properties properties;
     public WebDriver driver;
     public String baseUrl;
 
@@ -27,12 +32,17 @@ public class ApplicationManger {
 
     public ApplicationManger(String browser) {
         this.browser = browser;
+        properties = new Properties();
     }
 
-    public void init() {
+    public void init() throws IOException {
+        String target = System.getProperty("target", "local");
+        properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
+
         System.setProperty("webdriver.gecko.driver","C:\\JavaTmp\\geckodriver.exe");
         System.setProperty("webdriver.chrome.driver","C:\\JavaTmp\\chromedriver.exe");
         System.setProperty("webdriver.edge.driver","C:\\JavaTmp\\msedgedriver.exe");
+
         if (Objects.equals(browser, Browser.FIREFOX.browserName())) {
             driver = new FirefoxDriver();
         } else if (Objects.equals(browser, Browser.CHROME.browserName())) {
@@ -43,13 +53,12 @@ public class ApplicationManger {
 
         baseUrl = "https://www.google.com/";
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
-        driver.get("http://localhost/addressbook/");
+        driver.get(properties.getProperty("web.baseUrl"));
         groupHelper = new GroupHelper(driver);
         navigationHelper = new NavigationHelper(driver);
         sessionHelper = new SessionHelper(driver);
         contactHelper = new ContactHelper(driver);
-
-        sessionHelper.login("admin", "secret");
+        sessionHelper.login(properties.getProperty("web.adminLogin"), properties.getProperty("web.adminPassword"));
     }
 
 

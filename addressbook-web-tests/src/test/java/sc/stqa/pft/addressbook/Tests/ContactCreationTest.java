@@ -79,7 +79,8 @@ public class ContactCreationTest extends TestBase {
                 json += line;
                 line = reader.readLine();
             }
-            System.out.println(json);
+            logger.info("json parsed with row: " + json);
+            //System.out.println(json);
             ObjectMapper mapper = new ObjectMapper ();
             List<ContactData> contacts = mapper.readValue(json, new TypeReference<List<ContactData>>(){});
             return contacts.stream().map((c) -> new Object[] {c}).collect(Collectors.toList()).iterator();
