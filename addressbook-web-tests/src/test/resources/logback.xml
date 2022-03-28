@@ -3,7 +3,7 @@
     <timestamp key="bySecond" datePattern="yyyyMMdd'T'HHmmss"/>
 
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>c:\Java Tutorial Git\addressbook-web-tests\src\test\logs\test-${bySecond}.log</file>
+        <file>.\src\test\logs\test-${bySecond}.log</file>
         <!-- set immediateFlush to false for much higher logging throughput -->
         <immediateFlush>true</immediateFlush>
         <!-- encoders are assigned the type
