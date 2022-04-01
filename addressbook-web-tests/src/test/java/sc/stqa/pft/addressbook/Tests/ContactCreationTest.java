@@ -9,6 +9,8 @@ import com.thoughtworks.xstream.XStream;
 import org.testng.annotations.*;
 import sc.stqa.pft.addressbook.models.ContactData;
 import sc.stqa.pft.addressbook.models.Contacts;
+import sc.stqa.pft.addressbook.models.Groups;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -93,9 +95,11 @@ public class ContactCreationTest extends TestBase {
         app.goTo().homePage();
 
         Contacts before = app.db().contacts();
+        Groups groups = app.db().groups();
         app.goTo().addNew();
         File photo = new File("src/test/resources/123.png");
-        app.contact().create(contact.withPhoto(photo).withGroup("group4"), true);
+
+        app.contact().create(contact.withPhoto(photo).inGroup(groups.iterator().next()), true);
 
         assertThat(app.contact().count()-1, equalTo(before.size()));
         Contacts after = app.db().contacts();
