@@ -20,14 +20,5 @@ public class ContactPhoneTest extends TestBase {
         assertThat(contact.getAllPhones(), equalTo(mergePhones(contactInfoFromEditForm)));
     }
 
-    private String mergePhones(ContactData contact) {
-        return Arrays.asList(contact.getHomePhone(), contact.getMobile(), contact.getWorkPhone())
-                .stream().filter((s) -> ! s.equals(""))
-                .map(ContactPhoneTest::cleaned)
-                .collect(Collectors.joining("\n"));
-    }
 
-    public static String cleaned(String phone){
-        return phone.replaceAll("\\s", "").replaceAll("[-()]", "");
-    }
 }

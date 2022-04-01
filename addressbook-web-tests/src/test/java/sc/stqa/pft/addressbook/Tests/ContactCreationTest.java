@@ -101,18 +101,8 @@ public class ContactCreationTest extends TestBase {
         Contacts after = app.db().contacts();
         contact.withId(after.stream().mapToInt(ContactData::getId).max().getAsInt());
         assertThat(after, equalTo(before.withAdded(contact.withAllPhones(mergePhones(contact)))));
-    }
 
-    public String mergePhones(ContactData contact) {
-        return Arrays.asList(contact.getHomePhone(), contact.getMobile(), contact.getWorkPhone())
-                .stream().filter((s) -> s != null)
-                .filter((s) -> ! s.equals(""))
-                .map(ContactPhoneTest::cleaned)
-                .collect(Collectors.joining("\n"));
-    }
-
-    public static String cleaned(String phone){
-        return phone.replaceAll("\\s", "").replaceAll("[-()]", "");
+        verifyContactListInUI();
     }
 
     @Test(enabled = false)
