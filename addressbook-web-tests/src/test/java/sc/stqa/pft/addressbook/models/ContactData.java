@@ -70,7 +70,11 @@ public class ContactData {
     private String photo;
 
     public File getPhoto() {
-        return new File(photo);
+        if (photo != null) {
+            return new File(photo);
+        } else {
+            return null;
+        }
     }
     public String getAllPhones() {
         return allPhones;
@@ -154,12 +158,12 @@ public class ContactData {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ContactData that = (ContactData) o;
-        return id == that.id && Objects.equals(firstname, that.firstname) && Objects.equals(lastname, that.lastname) && Objects.equals(email, that.email) && Objects.equals(address, that.address) && Objects.equals(allPhones, that.allPhones);
+        return id == that.id && Objects.equals(firstname, that.firstname) && Objects.equals(lastname, that.lastname) && Objects.equals(email, that.email) && Objects.equals(address, that.address) && Objects.equals(mobile, that.mobile) && Objects.equals(homePhone, that.homePhone) && Objects.equals(workPhone, that.workPhone);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstname, lastname, email, address, allPhones);
+        return Objects.hash(id, firstname, lastname, email, address, mobile, homePhone, workPhone);
     }
 
     @Override
@@ -174,7 +178,6 @@ public class ContactData {
                 ", group='" + group + '\'' +
                 ", homePhone='" + homePhone + '\'' +
                 ", workPhone='" + workPhone + '\'' +
-                ", allPhones='" + allPhones + '\'' +
                 '}';
     }
 }

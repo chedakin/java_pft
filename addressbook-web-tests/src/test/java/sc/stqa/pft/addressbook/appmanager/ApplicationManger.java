@@ -29,6 +29,7 @@ public class ApplicationManger {
 
     public StringBuffer verificationErrors = new StringBuffer();
     private String browser;
+    private DBHelper dbHelper;
 
     public ApplicationManger(String browser) {
         this.browser = browser;
@@ -42,6 +43,8 @@ public class ApplicationManger {
         System.setProperty("webdriver.gecko.driver","C:\\JavaTmp\\geckodriver.exe");
         System.setProperty("webdriver.chrome.driver","C:\\JavaTmp\\chromedriver.exe");
         System.setProperty("webdriver.edge.driver","C:\\JavaTmp\\msedgedriver.exe");
+
+        dbHelper = new DBHelper();
 
         if (Objects.equals(browser, Browser.FIREFOX.browserName())) {
             driver = new FirefoxDriver();
@@ -59,8 +62,8 @@ public class ApplicationManger {
         sessionHelper = new SessionHelper(driver);
         contactHelper = new ContactHelper(driver);
         sessionHelper.login(properties.getProperty("web.adminLogin"), properties.getProperty("web.adminPassword"));
-    }
 
+    }
 
     public void stop() {
         driver.quit();
@@ -81,5 +84,9 @@ public class ApplicationManger {
 
     public ContactHelper contact() {
         return contactHelper;
+    }
+
+    public DBHelper db() {
+        return dbHelper;
     }
 }

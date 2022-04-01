@@ -92,13 +92,13 @@ public class ContactCreationTest extends TestBase {
     public void testContactCreation(ContactData contact) throws Exception {
         app.goTo().homePage();
 
-        Contacts before = app.contact().all();
+        Contacts before = app.db().contacts();
         app.goTo().addNew();
         File photo = new File("src/test/resources/123.png");
         app.contact().create(contact.withPhoto(photo).withGroup("group4"), true);
 
         assertThat(app.contact().count()-1, equalTo(before.size()));
-        Contacts after = app.contact().all();
+        Contacts after = app.db().contacts();
         contact.withId(after.stream().mapToInt(ContactData::getId).max().getAsInt());
         assertThat(after, equalTo(before.withAdded(contact.withAllPhones(mergePhones(contact)))));
     }
