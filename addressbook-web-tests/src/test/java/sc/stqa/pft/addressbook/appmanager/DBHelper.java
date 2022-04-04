@@ -10,6 +10,7 @@ import sc.stqa.pft.addressbook.models.Contacts;
 import sc.stqa.pft.addressbook.models.GroupData;
 import sc.stqa.pft.addressbook.models.Groups;
 
+import java.util.HashSet;
 import java.util.List;
 
 public class DBHelper {
@@ -42,4 +43,5 @@ public class DBHelper {
         session.close();
         return new Contacts(result);
     }
+
 }

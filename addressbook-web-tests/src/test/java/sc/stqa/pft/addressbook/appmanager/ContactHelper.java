@@ -7,6 +7,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import sc.stqa.pft.addressbook.models.ContactData;
 import sc.stqa.pft.addressbook.models.Contacts;
+import sc.stqa.pft.addressbook.models.GroupData;
+
 import java.util.List;
 
 import static org.testng.Assert.assertTrue;
@@ -89,11 +91,23 @@ public class ContactHelper extends HelperBase {
         returnToContactPage();
     }
 
-
     public void delete(ContactData contact) {
         selectContactById(contact.getId());
         deleteContact();
         contactsCache = null;
+    }
+
+    public void viewAllContacts() {
+        driver.findElement(By.name("group")).click();
+        new Select(driver.findElement(By.name("group"))).selectByVisibleText("[all]");
+    }
+
+    public void addToGroup(ContactData contact, GroupData group){
+
+        selectContactById(contact.getId());
+        driver.findElement(By.name("to_group")).click();
+        new Select(driver.findElement(By.name("to_group"))).selectByValue(""+ group.getId());
+        driver.findElement(By.name("add")).click();
     }
 
     public boolean isThereAContact() {

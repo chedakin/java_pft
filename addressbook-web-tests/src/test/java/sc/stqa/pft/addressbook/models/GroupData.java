@@ -3,7 +3,6 @@ package sc.stqa.pft.addressbook.models;
 import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
-import org.checkerframework.checker.signature.qual.Identifier;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -34,7 +33,7 @@ public class GroupData {
     @Type(type = "text")
     private String footer;
 
-    @ManyToMany(mappedBy = "groups")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "groups")
     private Set<ContactData> contacts = new HashSet<ContactData>();
 
     public GroupData withId(int id) {

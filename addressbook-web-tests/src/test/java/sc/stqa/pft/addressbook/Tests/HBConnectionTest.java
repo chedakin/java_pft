@@ -33,13 +33,14 @@ public class HBConnectionTest {
         }
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void testHBConnectionGroup() {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         List<GroupData> result = session.createQuery( "from GroupData" ).list();
         for ( GroupData group : result ) {
             System.out.println( group );
+            System.out.println(group.getContacts());
         }
         session.getTransaction().commit();
         session.close();
