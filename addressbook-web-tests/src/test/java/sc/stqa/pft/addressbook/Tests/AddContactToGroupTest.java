@@ -1,10 +1,5 @@
 package sc.stqa.pft.addressbook.Tests;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import sc.stqa.pft.addressbook.models.ContactData;
@@ -13,8 +8,6 @@ import sc.stqa.pft.addressbook.models.GroupData;
 import sc.stqa.pft.addressbook.models.Groups;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-
-import static sc.stqa.pft.addressbook.Tests.TestBase.app;
 
 public class AddContactToGroupTest extends TestBase {
 
@@ -46,11 +39,8 @@ public class AddContactToGroupTest extends TestBase {
         Groups allGroups = app.db().groups();
         GroupData group = allGroups.iterator().next();
 
-        logger.info("contact Id " + contactToAdd.getId());
-        logger.info("contact first name  " + contactToAdd.getFirstname());
-        logger.info("contact last name  " + contactToAdd.getLastname());
-        logger.info("group Id " + group.getId());
-        logger.info("group name " + group.getName());
+        logger.info("contact to add " + contactToAdd);
+        logger.info("group " + group);
 
         app.contact().addToGroup(contactToAdd, group);
         app.goTo().homePage();

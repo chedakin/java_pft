@@ -102,12 +102,25 @@ public class ContactHelper extends HelperBase {
         new Select(driver.findElement(By.name("group"))).selectByVisibleText("[all]");
     }
 
+    public void viewGroupContacts(GroupData group) {
+        driver.findElement(By.name("group")).click();
+        new Select(driver.findElement(By.name("group"))).selectByValue(""+ group.getId());
+    }
+
     public void addToGroup(ContactData contact, GroupData group){
 
         selectContactById(contact.getId());
         driver.findElement(By.name("to_group")).click();
         new Select(driver.findElement(By.name("to_group"))).selectByValue(""+ group.getId());
         driver.findElement(By.name("add")).click();
+    }
+
+    public void deleteFromGroup(ContactData contact, GroupData group) {
+
+        viewGroupContacts(group);
+        driver.findElement(By.id(""+contact.getId())).click();
+        driver.findElement(By.name("remove")).click();
+
     }
 
     public boolean isThereAContact() {
@@ -155,4 +168,6 @@ public class ContactHelper extends HelperBase {
         return new ContactData().withId(contact.getId()).withFirstname(firstname).withLastname(lastname).
                 withAddress(address).withEmail(email).withMobile(mobile).withWorkPhone(workPhone).withHomePhone(homePhone);
     }
+
+
 }
