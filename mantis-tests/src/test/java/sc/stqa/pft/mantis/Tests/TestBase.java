@@ -1,4 +1,4 @@
-package sc.stqa.pft.mantis.Tests.appmanager.Tests;
+package sc.stqa.pft.mantis.Tests;
 
 import org.openqa.selenium.remote.Browser;
 import org.testng.annotations.AfterSuite;
@@ -10,7 +10,7 @@ import java.io.File;
 
 public class TestBase {
 
-    protected static final ApplicationManager app = new ApplicationManager(System.getProperty("browser", Browser.CHROME.browserName()));
+    protected static final ApplicationManager app = new ApplicationManager(System.getProperty("browser", Browser.FIREFOX.browserName()));
 
     @BeforeSuite(alwaysRun = true)
     public void setUp() throws Exception {

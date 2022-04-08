@@ -1,4 +1,4 @@
-package sc.stqa.pft.mantis.Tests.appmanager.Tests;
+package sc.stqa.pft.mantis.Tests;
 
 import org.testng.annotations.Test;
 import sc.stqa.pft.mantis.appmanager.HttpSession;
