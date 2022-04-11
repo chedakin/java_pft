@@ -22,6 +22,7 @@ public class ApplicationManager {
     private String browser;
     public StringBuffer verificationErrors = new StringBuffer();
     private RegistrationHelper registrationHelper;
+    private NavigationHelper navigationHelper;
     private FtpHelper ftp;
     private MailHelper mailHelper;
     private JamesHelper jamesHelper;
@@ -67,6 +68,13 @@ public class ApplicationManager {
             registrationHelper = new RegistrationHelper(this);
         }
         return registrationHelper;
+    }
+
+    public NavigationHelper goTo() {
+        if (navigationHelper == null){
+            navigationHelper = new NavigationHelper(this);
+        }
+        return navigationHelper;
     }
 
     public FtpHelper ftp() {
