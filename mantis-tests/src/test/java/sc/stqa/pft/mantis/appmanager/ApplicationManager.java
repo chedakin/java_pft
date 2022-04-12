@@ -27,6 +27,7 @@ public class ApplicationManager {
     private MailHelper mailHelper;
     private JamesHelper jamesHelper;
     private DBHelper db;
+    private SoapHelper soapHelper;
 
 
     public ApplicationManager(String browser) {
@@ -103,6 +104,13 @@ public class ApplicationManager {
             db = new DBHelper(this);
         }
         return db;
+    }
+
+    public SoapHelper soap() {
+        if(soapHelper == null) {
+            soapHelper = new SoapHelper(this);
+        }
+        return soapHelper;
     }
 
     public WebDriver getDriver() {
