@@ -2,10 +2,10 @@ package net.webservices;
 
 import java.net.URL;
 import javax.xml.namespace.QName;
-import javax.xml.ws.WebEndpoint;
-import javax.xml.ws.WebServiceClient;
-import javax.xml.ws.WebServiceFeature;
-import javax.xml.ws.Service;
+import jakarta.xml.ws.WebEndpoint;
+import jakarta.xml.ws.WebServiceClient;
+import jakarta.xml.ws.WebServiceFeature;
+import jakarta.xml.ws.Service;
 
 /**
  * <b>A web service which performs GetIpAddress Lookups.</b>

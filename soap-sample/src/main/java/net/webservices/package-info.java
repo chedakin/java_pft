@@ -1,2 +1,2 @@
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://lavasoft.com/", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
+@jakarta.xml.bind.annotation.XmlSchema(namespace = "http://lavasoft.com/", elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED)
 package net.webservices;
