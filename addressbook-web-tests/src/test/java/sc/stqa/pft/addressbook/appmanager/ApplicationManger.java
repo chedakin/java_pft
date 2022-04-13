@@ -61,6 +61,7 @@ public class ApplicationManger {
         } else {
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setBrowserName(browser);
+            capabilities.setPlatform(Platform.fromString(System.getProperty("platform", "win10")));
             driver = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")),capabilities);
         }
 
