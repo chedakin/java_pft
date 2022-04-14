@@ -86,6 +86,10 @@ public class ApplicationManger {
         }
     }
 
+    public byte[] takeScreenshot() {
+       return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+    }
+
 
     public GroupHelper group() {
         return groupHelper;
